@@ -240,6 +240,7 @@
       const cleanup = () => { window.removeEventListener("message", onMessage); form.remove(); };
       const timeout = setTimeout(() => { if (done) return; done = true; cleanup(); reject(new Error("GAS_ASSIGNMENT_TIMEOUT")); }, 20000);
       const onMessage = (event) => {
+        console.log("GAS MESSAGE RECEIVED:", event.origin, event.data);
         const data = event.data;
         if (!isTrustedGasOrigin(event.origin) || !data || data.type !== "asteria-gas-assignment" || data.nonce !== nonce || done) return;
         done = true; clearTimeout(timeout); cleanup();
